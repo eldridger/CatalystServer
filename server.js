@@ -8,7 +8,9 @@ var express    = require("express"),
 	//cors       = require("cors"),
 	app        = express();
 
-mongoose.connect('mongodb://test:1234@ds027908.mongolab.com:27908/test_bears');
+
+mongoose.connect('mongodb://heroku_app26335431:egdqoldjoncmv5q5mf1stv4gcc@ds043477.mongolab.com:43477/heroku_app26335431/pickupScrims');
+//mongoose.connect('mongodb://test:1234@ds027908.mongolab.com:27908/test_bears');
 app.use(bodyParser());
 
 var port = process.env.PORT || 8080; //set our port
