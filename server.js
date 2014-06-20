@@ -5,12 +5,14 @@ var express    = require("express"),
 	mongoose   = require("mongoose"),
 	bodyParser = require("body-parser"),
 	Bear       = require('./app/models/bear'),
-	//cors       = require("cors"),
+	Pickup     = require('./app/models/pickupScrims'),
+	cors       = require("cors"),
 	app        = express();
 
 
-mongoose.connect('mongodb://heroku_app26335431:egdqoldjoncmv5q5mf1stv4gcc@ds043477.mongolab.com:43477/heroku_app26335431/pickupScrims');
-//mongoose.connect('mongodb://test:1234@ds027908.mongolab.com:27908/test_bears');
+app.use(cors());
+//mongoose.connect('mongodb://heroku_app26335431:egdqoldjoncmv5q5mf1stv4gcc@ds043477.mongolab.com:43477/heroku_app26335431/pickupScrims');
+mongoose.connect('mongodb://test:1234@ds027908.mongolab.com:27908/test_bears');
 app.use(bodyParser());
 
 var port = process.env.PORT || 8080; //set our port
@@ -25,6 +27,11 @@ router.use(function(req, res, next) {
 	next();
 });
 
+/*
+router.get('*', function(req, res) {
+	res.sendfile('../client/www/index.html');	
+})*/
+
 //test route to make sure everything is working ( GET http://localhost:8080/api )
 router.get('/', function(req, res) {
 	res.json({ message : 'hooray! welcome to our API!' });
@@ -33,89 +40,53 @@ router.get('/', function(req, res) {
 
 //More routes go here
 
-// on routes that end in /bears
-// ---------------------------------------
-router.route('/bears')
-	
-	//Create a bear (  POST http://localhost:8080/api/bears )
+// PICKUP SCRIM ROUTES
+//-----------------------------------------------------
+router.route('/pickups')
+
+	//get all pickups (  GET http://localhost:8080/api/pickups )
+	.get(function(req, res) {
+		Pickup.find(function(err, pickups) {
+			if(err) {
+				res.send(err);
+			}
+
+			res.json(pickups);
+		});
+	})
+
+	// create new pickup (  POST http://localhost:8080/api/pickups )
 	.post(function(req, res) {
 
-		var bear = new Bear();     //Create new instance of the bear model
-		bear.name = req.body.name;  // set the bears name (comes from the request)
+		var pickup = new Pickup();     //Create new instance of the Pickup model
+		pickup.gamertag = req.body.gamertag;  // set the gamertag (comes from the request)
 
 		//save the bear and check for errors
-		bear.save(function(err) {
+		pickup.save(function(err) {
 			if(err) {
 				res.send(err);
 				console.log(err);
 			}
 
-			res.json({message : 'Bear Created!'});
+			res.json({ message : 'Pickup Scrim Created'});
 		})
-	})
+	});
 
-	//get ALL THE BEARS ( GET http://localhost:8080/api/bears )
-	.get(function(req, res) {
-		Bear.find(function(err, bears) {
+// pickups specified by id
+router.route('/pickups/:pickup_id')
+	
+	//delete pickup with given id ( DELETE http://localhost:8080/api/pickups/:pickup_id)
+	.delete(function(req, res) {
+		Pickup.remove({
+			_id : req.params.pickup_id
+		}, function(err, todo) {
 			if(err) {
 				res.send(err);
 			}
 
-			res.json(bears);
-		})
+			res.json({ message : 'Pickup Scrim Removed'});
+		});
 	});
-
-//on routes that end in /bears:bear_id
-router.route('/bears/:bear_id')
-
-	//get a single bear ( GET http://localhost:8080/api/bears/:bear_id )
-	.get(function(req, res) {
-		Bear.findById(req.params.bear_id, function(err, bear) {
-			if (err) {
-				res.send(err);
-			}
-
-			res.json(bear);
-		});
-	})
-
-	//update bear with given id ( PUT http://localhost:8080/api/bears/:bears_id)
-	.put(function(req, res) {
-
-		// Find bear
-		Bear.findById(req.params.bear_id, function(err, bear) {
-			if (err) {
-				res.send(err);
-			}
-
-			bear.name = req.body.name; //update bears info
-
-			//save the bear
-			bear.save(function(err) {
-				if(err) {
-					res.send(err);
-				}
-
-				res.json({message : 'Bear Updated!'});
-			});
-		});
-	})
-
-	//delete bear with give id ( DELETE http://localhost:8080/api/bears/:bears_id)
-	.delete(function(req, res) {
-
-		Bear.remove({
-			_id : req.params.bear_id
-		}, function(err, bear) {
-			if (err){
-				res.send(err);
-			}
-
-			res.json({ message : 'Bear Successfully Deleted!'});
-		});
-
-	});
-
 
 
 //REGISTER our routes ------------------------
