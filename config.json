@@ -1,0 +1,8 @@
+{
+	"port" : 8080,
+	"api"  : {
+	},
+	"mongo" : "localhost:27017",
+	"commented_mongo"  : "mongodb://test:1234@ds027908.mongolab.com:27908/test_bears",
+	"commented2_mongo" : "mongodb://heroku_app26335431:egdqoldjoncmv5q5mf1stv4gcc@ds043477.mongolab.com:43477/heroku_app26335431/pickupScrims"
+}
