@@ -1,20 +1,23 @@
 {
-    "name": "catalystServer",
-    "version": "0.0.0",
-    "description": "",
-    "main": "server.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "engines" : {
-    	"node" : "0.10.x"
-    },
-    "author": "",
-    "license": "ISC",
-    "dependencies": {
-        "express": "^4.0.0",
-        "mongoose": "^3.6.13",
-        "body-parser": "^1.0.1",
-        "cors": "*"
-    }
+  "name": "catalystServer",
+  "version": "0.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": "0.10.x"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "babel": "^5.4.7",
+    "body-parser": "^1.0.1",
+    "cors": "*",
+    "debug": "^2.2.0",
+    "express": "^4.0.0",
+    "mongoose": "^3.6.13",
+    "morgan": "^1.5.3"
+  }
 }
