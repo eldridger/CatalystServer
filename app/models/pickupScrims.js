@@ -1,29 +1,15 @@
-// app/models/bear.js
-
-//TODO: fix expire
 import mongoose from 'mongoose';
-let schema = {
+const Schema = mongoose.Schema;
+
+let schema = new Schema({
+	//_id: { type: String, required: true },
 	gamertag: String,
 	game: String,
-	created: {
-		type: Date,
-		default: Date.now,
-		expireAfterSeconds: 2 * 60
-	},
-
 	createdAt: {
 		type: Date,
-		default: 1,
-		expire: 15 * 60
+		expires: 60,
+		default: Date.now
 	}
-};
-/*
-    pickupScrimSchema.index(
-	    {
-	    	createdAt: 1
-	    }, {
-	    	expireAfterSeconds : 15 * 60
-	    }
-    ); */
+});
 
 export default mongoose.model('Scrims', schema, 'scrims');
