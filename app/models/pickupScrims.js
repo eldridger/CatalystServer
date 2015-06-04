@@ -4,6 +4,7 @@
 import mongoose from 'mongoose';
 let schema = {
 	gamertag: String,
+	game: String,
 	created: {
 		type: Date,
 		default: Date.now,

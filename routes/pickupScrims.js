@@ -9,7 +9,7 @@ let router = express.Router();
 function remove(id, cb) {
     Pickups.remove({
         __id: id
-    }, (err, todo) => {
+    }, (err) => {
         cb('Pickup Scrim removed', err);
     });
 }
@@ -32,6 +32,8 @@ router.route('/api/pickups')
     .post((req, res) => {
         let pickup = new Pickups();
         pickup.gamertag = req.body.gamertag;
+        pickup.game = req.body.game;
+        console.log(req.body);
 
         // save and check for errors
         pickup.save((err) => {
@@ -51,6 +53,14 @@ router.route('/api/pickups')
                 console.log(err);
             }
         })
+    });
+
+// find pickup by game
+router.route('/api/pickups/:game')
+    .get((req, res) => {
+        Pickups.find({game: req.params.game}).exec((err, scrims) => {
+            res.json(scrims);
+        });
     });
 
 router.route('/api/pickups/:pickup_id')
