@@ -1,3 +1,3 @@
-/**
- * Created by Ryan on 6/5/2015.
- */
+export default {
+    db: 'mongodb://localhost/catalyst'
+}

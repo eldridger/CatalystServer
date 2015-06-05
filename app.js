@@ -8,10 +8,13 @@ import logger from 'morgan';
 import routes from './routes/index';
 import scrimsApi from './routes/pickupScrims';
 
+let env = 'production'; //process.env.NODE_ENV || 'development';
+let config = require('./config/config.js')[env];
+
 let app = express();
 
 function connect() {
-    mongoose.connect('mongodb://localhost/catalyst');
+    mongoose.connect(config.db);
     mongoose.connection.on('open', () => {
         console.log('Connected to Mongoose...');
     });
