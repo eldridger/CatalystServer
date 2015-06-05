@@ -6,10 +6,8 @@ import Pickups from '../app/models/pickupScrims';
 
 let router = express.Router();
 
-function remove(id, cb) {
-    Pickups.remove({
-        __id: id
-    }, (err) => {
+function remove(where, cb) {
+    Pickups.remove(where, (err) => {
         cb('Pickup Scrim removed', err);
     });
 }
@@ -63,10 +61,11 @@ router.route('/api/pickups/:game')
         });
     });
 
+// remove pickup by id
 router.route('/api/pickups/:pickup_id')
     //delete pickup with given id ( DELETE http://localhost:8080/api/pickups/:pickup_id)
     .delete((req, res) => {
-        remove(req.params.pickup_id, (message, err) => {
+        remove({_id: req.params.pickup_id}, (message, err) => {
             if (err) {
                 res.send(err);
             }
