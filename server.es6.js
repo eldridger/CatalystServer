@@ -45,7 +45,7 @@ let debug = require('debug')('CatalystServer:server');
 /**
  * Get port from environment and store in Express.
  */
-let port = normalizePort(process.env.PORT || '8080');
+let port = normalizePort(process.env.PORT || '8081');
 app.set('port', port);
 
 

@@ -38,8 +38,9 @@ router.route('/api/pickups')
             if (err) {
                 res.send(err);
                 console.log(err);
+            } else {
+                res.json({message: 'Pickup Scrim Created'});
             }
-            res.json({message: 'Pickup Scrim Created'});
         });
     })
     .delete((req, res) => {
